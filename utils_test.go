@@ -2,10 +2,10 @@ package realize
 
 import (
 	"flag"
+	"github.com/urfave/cli"
 	"os"
 	"path/filepath"
 	"testing"
-	"github.com/urfave/cli"
 )
 
 func TestParams(t *testing.T) {

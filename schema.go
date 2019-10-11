@@ -2,9 +2,9 @@ package realize
 
 import (
 	"errors"
+	"github.com/urfave/cli"
 	"path/filepath"
 	"reflect"
-	"github.com/urfave/cli"
 )
 
 // Schema projects list
