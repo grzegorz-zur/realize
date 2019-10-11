@@ -115,10 +115,6 @@ func (p *Project) Before() {
 		return
 	}
 
-	if hasGoMod(Wdir()) {
-		p.Tools.vgo = true
-	}
-
 	// setup go tools
 	p.Tools.Setup()
 	// global commands before

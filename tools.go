@@ -36,17 +36,11 @@ type Tools struct {
 	Install  Tool `yaml:"install,omitempty" json:"install,omitempty"`
 	Build    Tool `yaml:"build,omitempty" json:"build,omitempty"`
 	Run      Tool `yaml:"run,omitempty" json:"run,omitempty"`
-	vgo      bool
 }
 
 // Setup go tools
 func (t *Tools) Setup() {
-	var gocmd string
-	if t.vgo {
-		gocmd = "vgo"
-	} else {
-		gocmd = "go"
-	}
+	gocmd := "go"
 
 	// go clean
 	if t.Clean.Status {
