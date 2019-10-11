@@ -4,8 +4,7 @@ import (
 	"errors"
 	"path/filepath"
 	"reflect"
-
-	"gopkg.in/urfave/cli.v2"
+	"github.com/urfave/cli"
 )
 
 // Schema projects list

@@ -7,10 +7,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
+	"github.com/urfave/cli"
 	"github.com/oxequa/interact"
 	"github.com/grzegorz-zur/realize"
-	"gopkg.in/urfave/cli.v2"
 )
 
 var r realize.Realize
@@ -22,66 +21,61 @@ func main() {
 		Name:        strings.Title(realize.RPrefix),
 		Version:     realize.RVersion,
 		Description: "Realize is the #1 Golang Task Runner which enhance your workflow by automating the most common tasks and using the best performing Golang live reloading.",
-		Commands: []*cli.Command{
+		Commands: []cli.Command{
 			{
 				Name:        "start",
-				Aliases:     []string{"s"},
 				Description: "Start " + strings.Title(realize.RPrefix) + " on a given path. If not exist a config file it creates a new one.",
 				Flags: []cli.Flag{
-					&cli.StringFlag{Name: "path", Aliases: []string{"p"}, Value: ".", Usage: "Project base path"},
-					&cli.StringFlag{Name: "name", Aliases: []string{"n"}, Value: "", Usage: "Run a project by its name"},
-					&cli.BoolFlag{Name: "fmt", Aliases: []string{"f"}, Value: false, Usage: "Enable go fmt"},
-					&cli.BoolFlag{Name: "vet", Aliases: []string{"v"}, Value: false, Usage: "Enable go vet"},
-					&cli.BoolFlag{Name: "test", Aliases: []string{"t"}, Value: false, Usage: "Enable go test"},
-					&cli.BoolFlag{Name: "generate", Aliases: []string{"g"}, Value: false, Usage: "Enable go generate"},
-					&cli.BoolFlag{Name: "server", Aliases: []string{"srv"}, Value: false, Usage: "Start server"},
-					&cli.BoolFlag{Name: "open", Aliases: []string{"op"}, Value: false, Usage: "Open into the default browser"},
-					&cli.BoolFlag{Name: "install", Aliases: []string{"i"}, Value: false, Usage: "Enable go install"},
-					&cli.BoolFlag{Name: "build", Aliases: []string{"b"}, Value: false, Usage: "Enable go build"},
-					&cli.BoolFlag{Name: "run", Aliases: []string{"nr"}, Value: false, Usage: "Enable go run"},
-					&cli.BoolFlag{Name: "legacy", Aliases: []string{"l"}, Value: false, Usage: "Legacy watch by polling instead fsnotify"},
-					&cli.BoolFlag{Name: "no-config", Aliases: []string{"nc"}, Value: false, Usage: "Ignore existing config and doesn't create a new one"},
+					&cli.StringFlag{Name: "path", Value: ".", Usage: "Project base path"},
+					&cli.StringFlag{Name: "name", Value: "", Usage: "Run a project by its name"},
+					&cli.BoolFlag{Name: "fmt", Usage: "Enable go fmt"},
+					&cli.BoolFlag{Name: "vet", Usage: "Enable go vet"},
+					&cli.BoolFlag{Name: "test", Usage: "Enable go test"},
+					&cli.BoolFlag{Name: "generate", Usage: "Enable go generate"},
+					&cli.BoolFlag{Name: "server", Usage: "Start server"},
+					&cli.BoolFlag{Name: "open", Usage: "Open into the default browser"},
+					&cli.BoolFlag{Name: "install", Usage: "Enable go install"},
+					&cli.BoolFlag{Name: "build", Usage: "Enable go build"},
+					&cli.BoolFlag{Name: "run", Usage: "Enable go run"},
+					&cli.BoolFlag{Name: "legacy", Usage: "Legacy watch by polling instead fsnotify"},
+					&cli.BoolFlag{Name: "no-config", Usage: "Ignore existing config and doesn't create a new one"},
 				},
 				Action: start,
 			},
 			{
 				Name:        "add",
 				Category:    "Configuration",
-				Aliases:     []string{"a"},
 				Description: "Add a project to an existing config or to a new one.",
 				Flags: []cli.Flag{
-					&cli.StringFlag{Name: "path", Aliases: []string{"p"}, Value: realize.Wdir(), Usage: "Project base path"},
-					&cli.BoolFlag{Name: "fmt", Aliases: []string{"f"}, Value: false, Usage: "Enable go fmt"},
-					&cli.BoolFlag{Name: "vet", Aliases: []string{"v"}, Value: false, Usage: "Enable go vet"},
-					&cli.BoolFlag{Name: "test", Aliases: []string{"t"}, Value: false, Usage: "Enable go test"},
-					&cli.BoolFlag{Name: "generate", Aliases: []string{"g"}, Value: false, Usage: "Enable go generate"},
-					&cli.BoolFlag{Name: "install", Aliases: []string{"i"}, Value: false, Usage: "Enable go install"},
-					&cli.BoolFlag{Name: "build", Aliases: []string{"b"}, Value: false, Usage: "Enable go build"},
-					&cli.BoolFlag{Name: "run", Aliases: []string{"nr"}, Value: false, Usage: "Enable go run"},
+					&cli.StringFlag{Name: "path", Value: realize.Wdir(), Usage: "Project base path"},
+					&cli.BoolFlag{Name: "fmt", Usage: "Enable go fmt"},
+					&cli.BoolFlag{Name: "vet", Usage: "Enable go vet"},
+					&cli.BoolFlag{Name: "test", Usage: "Enable go test"},
+					&cli.BoolFlag{Name: "generate", Usage: "Enable go generate"},
+					&cli.BoolFlag{Name: "install", Usage: "Enable go install"},
+					&cli.BoolFlag{Name: "build", Usage: "Enable go build"},
+					&cli.BoolFlag{Name: "run", Usage: "Enable go run"},
 				},
 				Action: add,
 			},
 			{
 				Name:        "init",
 				Category:    "Configuration",
-				Aliases:     []string{"i"},
 				Description: "Make a new config file step by step.",
 				Action:      setup,
 			},
 			{
 				Name:        "remove",
 				Category:    "Configuration",
-				Aliases:     []string{"r"},
 				Description: "Remove a project from an existing config.",
 				Flags: []cli.Flag{
-					&cli.StringFlag{Name: "name", Aliases: []string{"n"}, Value: ""},
+					&cli.StringFlag{Name: "name", Value: ""},
 				},
 				Action: remove,
 			},
 			{
 				Name:        "clean",
 				Category:    "Configuration",
-				Aliases:     []string{"c"},
 				Description: "Remove " + strings.Title(realize.RPrefix) + " folder.",
 				Action: func(c *cli.Context) error {
 					return clean()
@@ -89,7 +83,6 @@ func main() {
 			},
 			{
 				Name:        "version",
-				Aliases:     []string{"v"},
 				Description: "Print " + strings.Title(realize.RPrefix) + " version.",
 				Action: func(p *cli.Context) error {
 					version()
