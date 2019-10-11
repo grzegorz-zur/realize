@@ -6,11 +6,6 @@ settings:
   legacy:
     force: false      # enable polling watcher
     interval: 0s      # polling interval
-server:
-  status: false       # web panel
-  open: true          # open in default browser
-  port: 3000          # server port
-  host: localhost     # server host
 schema:
 - name: realize       # project name
   path: .             # project path, '.' is for wdir path
@@ -30,13 +25,8 @@ schema:
     - /
     extensions:       # extensions watched
     - go
-    - html
-    - css
-    - js
     ignored_paths:    # paths ignored
     - .git
     - .realize
     - .idea
     - vendor
-    - realize/assets
-    - realize/bindata.go

@@ -4,7 +4,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 	"time"
 	"github.com/urfave/cli"
@@ -32,7 +31,6 @@ func main() {
 					&cli.BoolFlag{Name: "vet", Usage: "Enable go vet"},
 					&cli.BoolFlag{Name: "test", Usage: "Enable go test"},
 					&cli.BoolFlag{Name: "generate", Usage: "Enable go generate"},
-					&cli.BoolFlag{Name: "server", Usage: "Start server"},
 					&cli.BoolFlag{Name: "open", Usage: "Open into the default browser"},
 					&cli.BoolFlag{Name: "install", Usage: "Enable go install"},
 					&cli.BoolFlag{Name: "build", Usage: "Enable go build"},
@@ -158,11 +156,8 @@ func setup(c *cli.Context) (err error) {
 					val, err := d.Ans().Bool()
 					if err != nil {
 						return d.Err()
-					} else if val {
-						r := realize.Realize{}
-						r.Server = realize.Server{Parent: &r, Status: false, Open: false, Port: realize.Port, Host: realize.Host}
 					}
-					return nil
+					return val
 				},
 			},
 			{
@@ -256,84 +251,6 @@ func setup(c *cli.Context) (err error) {
 							r.Settings.Files.Errors = realize.Resource{Name: realize.FileErr, Status: val}
 							r.Settings.Files.Outputs = realize.Resource{Name: realize.FileOut, Status: val}
 							r.Settings.Files.Logs = realize.Resource{Name: realize.FileLog, Status: val}
-							return nil
-						},
-					},
-					{
-						Before: func(d interact.Context) error {
-							d.SetDef(false, realize.Green.Regular("(n)"))
-							return nil
-						},
-						Quest: interact.Quest{
-							Options: realize.Yellow.Regular("[y/n]"),
-							Msg:     "Enable web server",
-							Resolve: func(d interact.Context) bool {
-								val, _ := d.Ans().Bool()
-								return val
-							},
-						},
-						Subs: []*interact.Question{
-							{
-								Before: func(d interact.Context) error {
-									d.SetDef(realize.Port, realize.Green.Regular("("+strconv.Itoa(realize.Port)+")"))
-									return nil
-								},
-								Quest: interact.Quest{
-									Options: realize.Yellow.Regular("[int]"),
-									Msg:     "Server port",
-								},
-								Action: func(d interact.Context) interface{} {
-									val, err := d.Ans().Int()
-									if err != nil {
-										return d.Err()
-									}
-									r.Server.Port = int(val)
-									return nil
-								},
-							},
-							{
-								Before: func(d interact.Context) error {
-									d.SetDef(realize.Host, realize.Green.Regular("("+realize.Host+")"))
-									return nil
-								},
-								Quest: interact.Quest{
-									Options: realize.Yellow.Regular("[string]"),
-									Msg:     "Server host",
-								},
-								Action: func(d interact.Context) interface{} {
-									val, err := d.Ans().String()
-									if err != nil {
-										return d.Err()
-									}
-									r.Server.Host = val
-									return nil
-								},
-							},
-							{
-								Before: func(d interact.Context) error {
-									d.SetDef(false, realize.Green.Regular("(n)"))
-									return nil
-								},
-								Quest: interact.Quest{
-									Options: realize.Yellow.Regular("[y/n]"),
-									Msg:     "Open in current browser",
-								},
-								Action: func(d interact.Context) interface{} {
-									val, err := d.Ans().Bool()
-									if err != nil {
-										return d.Err()
-									}
-									r.Server.Open = val
-									return nil
-								},
-							},
-						},
-						Action: func(d interact.Context) interface{} {
-							val, err := d.Ans().Bool()
-							if err != nil {
-								return d.Err()
-							}
-							r.Server.Status = val
 							return nil
 						},
 					},
@@ -1106,10 +1023,6 @@ func start(c *cli.Context) (err error) {
 	if c.Bool("legacy") {
 		r.Settings.Legacy.Set(c.Bool("legacy"), 1)
 	}
-	// set server
-	if c.Bool("server") {
-		r.Server.Set(c.Bool("server"), c.Bool("open"), realize.Port, realize.Host)
-	}
 
 	// check no-config and read
 	if !c.Bool("no-config") {
@@ -1139,18 +1052,6 @@ func start(c *cli.Context) (err error) {
 			if err != nil {
 				return err
 			}
-		}
-	}
-	// Start web server
-	if r.Server.Status {
-		r.Server.Parent = &r
-		err = r.Server.Start()
-		if err != nil {
-			return err
-		}
-		err = r.Server.OpenURL()
-		if err != nil {
-			return err
 		}
 	}
 	// start workflow
