@@ -3,7 +3,7 @@ package main
 import (
 	"bytes"
 	"errors"
-	"github.com/grzegorz-zur/realize/realize"
+	"github.com/grzegorz-zur/realize"
 	"log"
 	"strings"
 	"testing"
