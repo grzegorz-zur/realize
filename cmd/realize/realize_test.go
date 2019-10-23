@@ -1,11 +1,8 @@
 package main
 
 import (
-	"bytes"
 	"errors"
 	"github.com/grzegorz-zur/realize"
-	"log"
-	"strings"
 	"testing"
 )
 
@@ -128,14 +125,5 @@ func TestRealize_remove(t *testing.T) {
 	mockResponse = errors.New("error")
 	if err := m.clean(); err == nil {
 		t.Error("Expected error")
-	}
-}
-
-func TestRealize_version(t *testing.T) {
-	var buf bytes.Buffer
-	log.SetOutput(&buf)
-	version()
-	if !strings.Contains(buf.String(), realize.RVersion) {
-		t.Error("Version expted", realize.RVersion)
 	}
 }

@@ -1,14 +1,14 @@
 package main
 
 import (
+	"github.com/grzegorz-zur/realize"
+	"github.com/oxequa/interact"
+	"github.com/urfave/cli"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
-	"github.com/urfave/cli"
-	"github.com/oxequa/interact"
-	"github.com/grzegorz-zur/realize"
 )
 
 var r realize.Realize
@@ -18,8 +18,7 @@ func main() {
 	r.Sync = make(chan string)
 	app := &cli.App{
 		Name:        strings.Title(realize.RPrefix),
-		Version:     realize.RVersion,
-		Description: "Realize is the #1 Golang Task Runner which enhance your workflow by automating the most common tasks and using the best performing Golang live reloading.",
+		Description: "Go Task Runner",
 		Commands: []cli.Command{
 			{
 				Name:        "start",
@@ -79,24 +78,11 @@ func main() {
 					return clean()
 				},
 			},
-			{
-				Name:        "version",
-				Description: "Print " + strings.Title(realize.RPrefix) + " version.",
-				Action: func(p *cli.Context) error {
-					version()
-					return nil
-				},
-			},
 		},
 	}
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
 	}
-}
-
-// Version print current version
-func version() {
-	log.Println(r.Prefix(realize.Green.Bold(realize.RVersion)))
 }
 
 // Clean remove realize file

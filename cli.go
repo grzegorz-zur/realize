@@ -18,8 +18,6 @@ import (
 var (
 	// RPrefix tool name
 	RPrefix = "realize"
-	// RVersion current version
-	RVersion = "2.0.3"
 	// RExt file extension
 	RExt = ".yaml"
 	// RFile config file name
