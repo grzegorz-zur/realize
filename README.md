@@ -9,6 +9,11 @@ The goal of this fork is to simplify the tool and maintain it to support the lat
 ## Installation
 
 ```
-go get github.com/grzegorz-zur/realize
-go install github.com/grzegorz-zur/realize/cmd/realize
+go get github.com/grzegorz-zur/realize/cmd/realize
 ``` 
+
+## Running
+
+```
+realize
+```

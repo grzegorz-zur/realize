@@ -1,32 +1,32 @@
 settings:
   recovery:
-    index: true       # print files indexing
-    events: false     # print each event
-    tools: false      # print each tool
+    index: true
+    events: true
+    tools: true
   legacy:
-    force: false      # enable polling watcher
-    interval: 0s      # polling interval
+    force: false
+    interval: 0s
 schema:
-- name: realize       # project name
-  path: .             # project path, '.' is for wdir path
-  commands:           # all go commands supported
-    generate:         # go generate
+- name: realize
+  path: .
+  commands:
+    fmt:
       status: true
-    install:          # go install
+    generate:
       status: true
-    vet:              # go vet
+    vet:
       status: true
-    test:             # go test
+    test: 
       status: true
-    fmt:              # go fmt
+    build:
+      status: true
+    install:
       status: true
   watcher:
-    paths:            # paths watched
+    paths:
     - /
-    extensions:       # extensions watched
+    extensions:
     - go
-    ignored_paths:    # paths ignored
+    - mod
+    ignored_paths:
     - .git
-    - .realize
-    - .idea
-    - vendor

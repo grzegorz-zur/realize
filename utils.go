@@ -1,26 +1,10 @@
 package realize
 
 import (
-	"errors"
-	"github.com/urfave/cli"
 	"log"
 	"os"
-	"path"
 	"strings"
 )
-
-// Params parse one by one the given argumentes
-func params(params *cli.Context) []string {
-	argsN := params.NArg()
-	if argsN > 0 {
-		var args []string
-		for i := 0; i <= argsN-1; i++ {
-			args = append(args, params.Args().Get(i))
-		}
-		return args
-	}
-	return nil
-}
 
 // Split each arguments in multiple fields
 func split(args, fields []string) []string {
@@ -29,16 +13,6 @@ func split(args, fields []string) []string {
 		args = append(args, arr...)
 	}
 	return args
-}
-
-// Duplicates check projects with same name or same combinations of main/path
-func duplicates(value Project, arr []Project) (Project, error) {
-	for _, val := range arr {
-		if value.Name == val.Name {
-			return val, errors.New("There is already a project with name '" + val.Name + "'. Check your config file!")
-		}
-	}
-	return Project{}, nil
 }
 
 // Get file extensions
@@ -73,13 +47,4 @@ func Wdir() string {
 		log.Fatal(err.Error())
 	}
 	return dir
-}
-
-func hasGoMod(dir string) bool {
-	filename := path.Join(dir, "go.mod")
-	if _, err := os.Stat(filename); os.IsNotExist(err) {
-		return false
-	}
-
-	return true
 }
