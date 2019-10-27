@@ -1,11 +1,3 @@
-settings:
-  recovery:
-    index: true
-    events: true
-    tools: true
-  legacy:
-    force: false
-    interval: 0s
 schema:
 - name: realize
   path: .

@@ -275,7 +275,7 @@ func (p *Project) Watch(wg *sync.WaitGroup) {
 	// change channel
 	p.stop = make(chan bool)
 	// init a new watcher
-	p.watcher, err = NewFileWatcher(p.parent.Settings.Legacy)
+	p.watcher, err = EventWatcher()
 	if err != nil {
 		log.Fatal(err)
 	}
