@@ -7,6 +7,6 @@ require (
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/mattn/go-colorable v0.1.4 // indirect
 	github.com/mattn/go-isatty v0.0.10 // indirect
-	golang.org/x/sys v0.0.0-20191024073052-e66fe6eb8e0c // indirect
+	golang.org/x/sys v0.0.0-20191026070338-33540a1f6037 // indirect
 	gopkg.in/yaml.v2 v2.2.4
 )
