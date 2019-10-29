@@ -1,6 +1,6 @@
 # Realize
 
-Task runner
+Task runner.
 
 ## Goal
 
@@ -8,22 +8,10 @@ The goal of this fork is to simplify the tool and maintain it to support the lat
 
 ## Installation
 
-### Install
-
-```
-go get github.com/grzegorz-zur/realize/cmd/realize
-```
-
-### Update
+To install or update run the following command.
 
 ```
 go get -u github.com/grzegorz-zur/realize/cmd/realize
-```
-
-### Uninstall
-
-```
-go clean -i -r -cache -modcache github.com/grzegorz-zur/realize/cmd/realize
 ```
 
 ## Configuration
