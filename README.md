@@ -1,5 +1,7 @@
 # Realize
 
+**Discontinued in favor of [loop](https://github.com/grzegorz-zur/loop/)**
+
 Task runner.
 
 ## Goal
